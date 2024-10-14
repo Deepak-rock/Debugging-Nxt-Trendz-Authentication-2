@@ -2,8 +2,6 @@ import {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import Home from '../Home'
-
 import './index.css'
 
 class LoginForm extends Component {
@@ -24,11 +22,10 @@ class LoginForm extends Component {
 
   onSubmitSuccess = jwtToken => {
     const {history} = this.props
-
     Cookies.set('jwt_token', jwtToken, {
       expires: 30,
     })
-    return <Home />
+    history.replace('/')
   }
 
   onSubmitFailure = errorMsg => {
@@ -114,7 +111,7 @@ class LoginForm extends Component {
           className="login-img"
           alt="website login"
         />
-        <form className="form-container" onClick={this.submitForm}>
+        <form className="form-container" onSubmit={this.submitForm}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
             className="login-website-logo-desktop-img"
@@ -122,7 +119,7 @@ class LoginForm extends Component {
           />
           <div className="input-container">{this.renderUsernameField()}</div>
           <div className="input-container">{this.renderPasswordField()}</div>
-          <button type="button" className="login-button">
+          <button type="submit" className="login-button">
             Login
           </button>
           {showSubmitError && <p className="error-message">*{errorMsg}</p>}
